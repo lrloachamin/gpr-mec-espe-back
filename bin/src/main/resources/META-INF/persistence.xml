@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="ec.edu.espe.gpr_gpr-espe_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>ec.edu.espe.gpr.model.XeoxpOpcpe</class>
+    <class>ec.edu.espe.gpr.model.Docente</class>
+    <class>ec.edu.espe.gpr.model.XeopcOpcio</class>
+    <class>ec.edu.espe.gpr.model.XeusuUsuar</class>
+    <class>ec.edu.espe.gpr.model.XeperPerfi</class>
+    <class>ec.edu.espe.gpr.model.Tarea</class>
+    <class>ec.edu.espe.gpr.model.XesisSiste</class>
+    <class>ec.edu.espe.gpr.model.Proyecto</class>
+    <class>ec.edu.espe.gpr.model.XeuxpUsupe</class>
+    <class>ec.edu.espe.gpr.model.PecarCargo</class>
+    <class>ec.edu.espe.gpr.model.TareaDocente</class>
+    <class>ec.edu.espe.gpr.model.Usuario</class>
+    <class>ec.edu.espe.gpr.model.Usuper</class>
+    <class>ec.edu.espe.gpr.model.Cargo</class>
+    <class>ec.edu.espe.gpr.model.OpcPer</class>
+    <class>ec.edu.espe.gpr.model.Opcion</class>
+    <class>ec.edu.espe.gpr.model.Perfil</class>
+    <class>ec.edu.espe.gpr.model.Sistema</class>
+    <class>ec.edu.espe.gpr.model.Indicador</class>
+    <class>ec.edu.espe.gpr.model.TareaIndicador</class>
+    <class>ec.edu.espe.gpr.model.TipoProceso</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://gpr-bd-mysql.mysql.database.azure.com:3306/gprbd?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
+      <property name="javax.persistence.jdbc.user" value="bnacato"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="Monster_123"/>
+    </properties>
+  </persistence-unit>
+</persistence>
