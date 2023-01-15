@@ -16,8 +16,8 @@ import ec.edu.espe.gpr.services.IEmailService;
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class GprEspeApplication {
 	
-	//@Autowired
-	//private IEmailService emservice;
+	@Autowired
+	private IEmailService emservice;
 	
 	
 
