@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.edu.espe.gpr.controller.FileController;
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.ITareaDao;
@@ -29,12 +30,14 @@ import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
 import ec.edu.espe.gpr.model.TareaIndicador;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 /*import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.model.Usuper;
 import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
 import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.dao.IPerfilDao;
 import ec.edu.espe.gpr.dao.IPerfilDao;*/
+import ec.edu.espe.gpr.model.TareasRealizadas;
 
 @Service
 public class TareaDocenteService {
@@ -227,8 +230,30 @@ public class TareaDocenteService {
         return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
     }
 
-    public List<TareaDocente> listarTodasTareasRevisadas(){
-        return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
+    public List<TareasRealizadas> listarTodasTareasRevisadas(){
+        List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
+        List<TareasRealizadas> tRealizadas = new ArrayList<>();
+        for (TareaDocente tareaDocente : tareaDocentes) {
+            TareasRealizadas tRealizada = new TareasRealizadas();
+            tRealizada.setNombreDocenteRevisor(tareaDocente.getCodigoTarea().getNombreDocenteRevisor());
+            tRealizada.setTipoProceso(tareaDocente.getCodigoTarea().getCodigoProyecto().getTipoProceso().getNombreTipoProceso());
+            tRealizada.setNombreProyecto(tareaDocente.getCodigoTarea().getCodigoProyecto().getNombreProyecto());
+            tRealizada.setNombreTarea(tareaDocente.getCodigoTarea().getNombreTarea());
+            tRealizada.setPrioridadTarea(tareaDocente.getCodigoTarea().getPrioridadTarea());
+            tRealizada.setPesoTarea(tareaDocente.getCodigoTarea().getValorPesoTarea()+" "+tareaDocente.getCodigoTarea().getPesoTarea());
+            tRealizada.setFechaCreaciontarea(tareaDocente.getCodigoTarea().getFechaCreaciontarea());
+            tRealizada.setFechaEntregaTarea(tareaDocente.getCodigoTarea().getFechaEntregaTarea());
+            tRealizada.setResponsable(tareaDocente.getCodigoDocente().getNombreDocente()+" "+tareaDocente.getCodigoDocente().getApellidoDocente());
+            tRealizada.setTareaIndicadors(this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaDocente));
+            if(tareaDocente.getNombreArchivoTareaDocente()!="" || tareaDocente.getNombreArchivoTareaDocente()!=null){
+                tRealizada.setNombreArchivo(tareaDocente.getNombreArchivoTareaDocente());    
+                String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile",
+                    tareaDocente.getArchivoTareaDocente()).build().toString();
+                tRealizada.setUrlArchivo(url);
+            }
+            tRealizadas.add(tRealizada);
+        }
+        return tRealizadas;
     }
 	
     public void crear(TareaDocenteProyecto tareaDocenteProyecto,MultipartFile file) {
