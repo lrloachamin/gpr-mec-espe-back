@@ -248,7 +248,7 @@ public class TareaDocenteService {
             if(tareaDocente.getNombreArchivoTareaDocente()!="" || tareaDocente.getNombreArchivoTareaDocente()!=null){
                 tRealizada.setNombreArchivo(tareaDocente.getNombreArchivoTareaDocente());    
                 String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile",
-                    tareaDocente.getArchivoTareaDocente()).build().toString();
+                    "files/"+tareaDocente.getArchivoTareaDocente()).build().toString();
                 tRealizada.setUrlArchivo(url);
             }
             tRealizadas.add(tRealizada);
