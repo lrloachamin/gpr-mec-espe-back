@@ -74,7 +74,7 @@ public class FileController {
     }
 
 
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename){
         Resource file = fileService.load(filename);
         String[] fileProperties = filename.split("\\.");
