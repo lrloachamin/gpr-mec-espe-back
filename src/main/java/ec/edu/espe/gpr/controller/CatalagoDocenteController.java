@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.edu.espe.gpr.response.CatalogoDocenteResponseRest;
 import ec.edu.espe.gpr.services.ICatalogoDocenteService;
 
-@CrossOrigin(origins= {"https://mango-rock-08c52cc10.2.azurestaticapps.net","http://localhost:4200"})
+@CrossOrigin(origins= {"https://zealous-mud-0ce237710.2.azurestaticapps.net","http://localhost:4200"})
 @RestController
 @RequestMapping("/api/v1")
 public class CatalagoDocenteController {

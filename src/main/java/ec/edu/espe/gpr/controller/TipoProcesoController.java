@@ -16,7 +16,7 @@ import ec.edu.espe.gpr.model.TipoProceso;
 import ec.edu.espe.gpr.services.TipoProcesoService;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins= {"https://mango-rock-08c52cc10.2.azurestaticapps.net","http://localhost:4200"})
+@CrossOrigin(origins= {"https://zealous-mud-0ce237710.2.azurestaticapps.net","http://localhost:4200"})
 @RestController
 @RequestMapping(path = "/tipoProceso")
 @RequiredArgsConstructor
