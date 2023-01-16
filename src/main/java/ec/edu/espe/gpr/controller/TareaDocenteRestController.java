@@ -25,7 +25,6 @@ import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
 import ec.edu.espe.gpr.model.TareaIndicador;
-import ec.edu.espe.gpr.model.TareasRealizadas;
 import ec.edu.espe.gpr.services.TareaDocenteService;
 import lombok.RequiredArgsConstructor;
 
@@ -150,9 +149,9 @@ public class TareaDocenteRestController {
     }
 
     @GetMapping(path = "/listarTodasTareasRevisadas")
-    public ResponseEntity<List<TareasRealizadas>> listarTodasTareasRevisadas() {
+    public ResponseEntity<List<TareaDocente>> listarTodasTareasRevisadas() {
         try {
-            List<TareasRealizadas> tareaDocentes = this.tareaDocenteService.listarTodasTareasRevisadas();
+            List<TareaDocente> tareaDocentes = this.tareaDocenteService.listarTodasTareasRevisadas();
             return ResponseEntity.ok(tareaDocentes);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
