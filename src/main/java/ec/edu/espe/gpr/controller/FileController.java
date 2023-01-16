@@ -8,13 +8,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
@@ -24,10 +23,8 @@ import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.services.FileService;
 
-
-@CrossOrigin(origins = { "https://zealous-mud-0ce237710.2.azurestaticapps.net", "http://localhost:4200" })
-@RestController
-@RequestMapping("/files")
+@Controller
+@CrossOrigin("*")
 public class FileController {
 
     @Autowired
