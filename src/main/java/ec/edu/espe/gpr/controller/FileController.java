@@ -27,7 +27,7 @@ import ec.edu.espe.gpr.services.FileService;
 
 @CrossOrigin(origins = { "https://zealous-mud-0ce237710.2.azurestaticapps.net", "http://localhost:4200" })
 @RestController
-@RequestMapping(path = "/files")
+@RequestMapping("/files")
 public class FileController {
 
     @Autowired
