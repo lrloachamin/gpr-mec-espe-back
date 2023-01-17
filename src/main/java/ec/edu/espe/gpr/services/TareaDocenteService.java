@@ -281,10 +281,10 @@ public class TareaDocenteService {
             t.setCodigoDocente(docente);
             t.setCodigoTarea(tarea);
             t.setCedulaDocenteRevisor(tarea.getIdDocenteRevisor());
-            /*emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: "+tarea.getNombreTarea(),
+            emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: "+tarea.getNombreTarea(),
 							"Se ha asignado una nueva tarea de prioridad "+tarea.getPrioridadTarea() + 
                             ", y debe ser realizada hasta la fecha de:"+tarea.getFechaEntregaTarea());
-            */
+            
             TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
             for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
                 TareaIndicador indicadorBD = new TareaIndicador();
