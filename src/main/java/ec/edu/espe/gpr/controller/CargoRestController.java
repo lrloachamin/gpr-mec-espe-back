@@ -56,13 +56,4 @@ public class CargoRestController {
         }
 	}
 
-	@GetMapping("/obtenerCargosPorCodCargo/{codCargo}")
-	public ResponseEntity<List<Cargo>> obtenerCargosPorPerfil(@PathVariable String codCargo){
-		try {
-            List<Cargo> cargos = this.cargoservice.findByCodCargo(codCargo);
-            return ResponseEntity.ok(cargos);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
-	}
 }

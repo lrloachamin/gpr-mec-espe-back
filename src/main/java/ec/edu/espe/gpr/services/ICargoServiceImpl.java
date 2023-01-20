@@ -132,19 +132,4 @@ public class ICargoServiceImpl implements ICargoService{
 		}
 		return cargos;
 	}*/
-
-	private Cargo obtenerCargoPorCodCargo(String codCargo) {	
-		Optional<Cargo> cargoOpt = this.cargodao.findById(codCargo);
-		if (cargoOpt.isPresent())
-			return cargoOpt.get();
-		else 
-			return null;
-	}
-
-	@Override
-	public List<Cargo> findByCodCargo(String codCargo){
-		Cargo cargo = this.obtenerCargoPorCodCargo(codCargo);
-		return this.cargodao.findByCodCargoPadre(cargo);
-	}
-
 }
