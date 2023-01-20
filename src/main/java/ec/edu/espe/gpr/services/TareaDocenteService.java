@@ -120,7 +120,8 @@ public class TareaDocenteService {
         /*Perfil perfil = obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil));
 		List<Docente> docentes = this.obtenerDocentesPorPerfil(perfil);
         List<Docente> docentesPerfil = new ArrayList<>();*/
-		return this.docenteDao.findByCodCargo(cargo);
+        List<Docente> docentes= new ArrayList<>();
+		return docentes;//this.docenteDao.findByCodCargo(cargo);
         /*for (Docente docente : docentes) {
             if(docente.getCodCargo().equals(cargo))
                 docentesPerfil.add(docente);       

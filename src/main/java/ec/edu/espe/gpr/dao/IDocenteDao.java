@@ -12,7 +12,7 @@ import ec.edu.espe.gpr.model.Usuario;
 public interface IDocenteDao extends JpaRepository<Docente, Integer> {
     Optional<Docente> findByCodigoDocente(Integer codigoDocente);
     Optional<Docente> findByCodigoUsuario(Usuario codigoUsuario);
-    List<Docente> findByCodCargo(Cargo codCargo);
+    //List<Docente> findByCodCargo(Cargo codCargo);
     Docente findByNombreDocente(String nombreDocente);
     Docente findByCorreoDocente(String nombreDocente);
 }

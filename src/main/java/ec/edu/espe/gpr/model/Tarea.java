@@ -84,11 +84,6 @@ public class Tarea implements Serializable {
     @Column(name = "NOMBRE_DOCENTE_REVISOR")
     private String nombreDocenteRevisor;
 
-    @JoinColumn(name = "CODIGO_TAREA_PADRE", referencedColumnName = "CODIGO_TAREA")
-    @ManyToOne(optional = true, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Tarea codigoTareaPadre;
-
     @JoinColumn(name = "CODIGO_PROYECTO", referencedColumnName = "CODIGO_PROYECTO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

@@ -53,7 +53,7 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		try {
 			Optional<Cargo> cargo=cargoDao.findById(id);
 			if(cargo.isPresent()) {
-				docente.setCodCargo(cargo.get());
+				//docente.setCodCargo(cargo.get());
 			}else {
 				response.setMetadata("Respuesta nok", "-1", "No se encontro la categoria");
 				return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.NOT_FOUND);
@@ -247,7 +247,7 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			    usuarioF.get().setSexo(docente.getSexo());
 			    usuarioF.get().setPuestoTrabajoDocente(docente.getPuestoTrabajoDocente());
 			    usuarioF.get().setCorreoDocente(docente.getCorreoDocente());
-			    usuarioF.get().setCodCargo(docente.getCodCargo());
+			    //usuarioF.get().setCodCargo(docente.getCodCargo());
 
 				
 				

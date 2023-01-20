@@ -57,10 +57,10 @@ public class Docente implements Serializable {
     @Column(name = "NUM_LOGUEO")
     private Integer numLogueo;
     
-    @JoinColumn(name = "COD_CARGO", referencedColumnName = "COD_CARGO")
+    /*@JoinColumn(name = "COD_CARGO", referencedColumnName = "COD_CARGO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Cargo codCargo;
+    private Cargo codCargo;*/
 
     @JoinColumn(name = "CODIGO_USUARIO", referencedColumnName = "CODIGO_USUARIO")
     @ManyToOne(fetch= FetchType.LAZY)
@@ -144,13 +144,13 @@ public class Docente implements Serializable {
         this.correoDocente = correoDocente;
     }
 
-    public Cargo getCodCargo() {
+    /*public Cargo getCodCargo() {
         return codCargo;
     }
 
     public void setCodCargo(Cargo codCargo) {
         this.codCargo = codCargo;
-    }
+    }*/
 
     public Usuario getCodigoUsuario() {
         return codigoUsuario;
