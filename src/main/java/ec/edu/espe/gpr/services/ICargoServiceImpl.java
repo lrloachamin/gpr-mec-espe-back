@@ -3,7 +3,6 @@ package ec.edu.espe.gpr.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -143,6 +142,10 @@ public class ICargoServiceImpl implements ICargoService{
 		return cargos;
 	}
 
+	@Override
+	public void modificar(Cargo cargo){
+		this.cargodao.save(cargo);
+	}
 	
 
 	/*private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {	

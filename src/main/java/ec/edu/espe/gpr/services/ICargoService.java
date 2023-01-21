@@ -13,4 +13,5 @@ public interface ICargoService {
 	public ResponseEntity<CargoResponseRest> save(Cargo cargo);
 	public List<Cargo> findAll();
 	public List<Cargo> buscarCargosDocente(Integer codigoDocente);
+	public void modificar(Cargo cargo);
 }

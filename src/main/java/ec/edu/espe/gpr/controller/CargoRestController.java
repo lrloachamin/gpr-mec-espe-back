@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,6 +63,17 @@ public class CargoRestController {
             List<Cargo> cargos = this.cargoservice.buscarCargosDocente(codigoDocente);
             return ResponseEntity.ok(cargos);
         } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+	}
+
+	@PutMapping("/modificar")
+	public ResponseEntity<String> modificar(@RequestBody Cargo cargo){
+		try {
+            this.cargoservice.modificar(cargo);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
 	}
