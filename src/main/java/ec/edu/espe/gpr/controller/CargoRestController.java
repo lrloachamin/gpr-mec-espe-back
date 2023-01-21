@@ -67,7 +67,7 @@ public class CargoRestController {
         }
 	}
 
-	@PutMapping("/modificar")
+	@PutMapping("/modificarCargo")
 	public ResponseEntity<String> modificar(@RequestBody Cargo cargo){
 		try {
             this.cargoservice.modificar(cargo);
