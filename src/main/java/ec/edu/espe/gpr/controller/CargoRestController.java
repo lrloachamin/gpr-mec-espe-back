@@ -56,4 +56,14 @@ public class CargoRestController {
         }
 	}
 
+	@GetMapping("/listarCargoDocente/{codigoDocente}")
+	public ResponseEntity<List<Cargo>> buscarCargosDocente(@PathVariable Integer codigoDocente){
+		try {
+            List<Cargo> cargos = this.cargoservice.buscarCargosDocente(codigoDocente);
+            return ResponseEntity.ok(cargos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+	}
+
 }

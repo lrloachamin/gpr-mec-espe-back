@@ -10,8 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ec.edu.espe.gpr.dao.CargoDocenteDao;
 import ec.edu.espe.gpr.dao.ICargoDao;
+import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.model.Cargo;
+import ec.edu.espe.gpr.model.CargoDocente;
+import ec.edu.espe.gpr.model.Docente;
 /*import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.IPerfilDao;
 import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
@@ -26,6 +30,10 @@ import ec.edu.espe.gpr.response.CargoResponseRest;
 public class ICargoServiceImpl implements ICargoService{
 	@Autowired
 	private ICargoDao cargodao;
+	@Autowired
+	private IDocenteDao docenteDao;
+	@Autowired
+	private CargoDocenteDao cargoDocenteDao;
 	/*@Autowired
 	private IUsuarioPerfilDao usuarioperfilDao;
 	@Autowired
@@ -113,6 +121,27 @@ public class ICargoServiceImpl implements ICargoService{
 	public List<Cargo> findAll(){
 		return this.cargodao.findAll();
 	}
+
+	private Docente obtenerDocentePorCodigoDocente(Integer CodigoDocente) {	
+		Optional<Docente> docenteOpt = this.docenteDao.findById(CodigoDocente);
+		if (docenteOpt.isPresent())
+			return docenteOpt.get();
+		else 
+			return null;
+	}
+
+	@Override
+	public List<Cargo> buscarCargosDocente(Integer codigoDocente) {
+		Docente docente = obtenerDocentePorCodigoDocente(codigoDocente);
+		List<CargoDocente> cargoDocentes = this.cargoDocenteDao.findByCodigoDocente(docente);
+		List<Cargo> cargos = new ArrayList<>();
+		for (CargoDocente cargoDocente : cargoDocentes) {
+			cargos.add(cargoDocente.getCodCargo());
+		}
+		return cargos;
+	}
+
+	
 
 	/*private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {	
 		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(usuario);
