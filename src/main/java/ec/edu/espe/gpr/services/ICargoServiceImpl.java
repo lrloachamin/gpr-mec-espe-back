@@ -3,6 +3,7 @@ package ec.edu.espe.gpr.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -96,7 +97,8 @@ public class ICargoServiceImpl implements ICargoService{
 		CargoResponseRest response= new CargoResponseRest();
 		List<Cargo> list= new ArrayList<>();
 		try {
-			
+			Long codCargo = this.cargodao.count()+1;
+        	cargo.setCodCargo(codCargo.toString());
 			Cargo cargosave=cargodao.save(cargo);
 			if(cargosave!=null) {
 			list.add(cargosave);
