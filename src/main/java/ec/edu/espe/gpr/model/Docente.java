@@ -70,6 +70,10 @@ public class Docente implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoDocente",fetch= FetchType.LAZY)
     @JsonBackReference(value="tareaDocenteList")
     private List<TareaDocente> tareaDocenteList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoDocente",fetch= FetchType.LAZY)
+    @JsonBackReference(value="cargoDocenteList")
+    private List<CargoDocente> cargoDocenteList;
     
     public Docente() {
     }
@@ -223,6 +227,14 @@ public class Docente implements Serializable {
 
     public void setNumLogueo(Integer numLogueo) {
         this.numLogueo = numLogueo;
+    }
+
+    public List<CargoDocente> getCargoDocenteList() {
+        return cargoDocenteList;
+    }
+
+    public void setCargoDocenteList(List<CargoDocente> cargoDocenteList) {
+        this.cargoDocenteList = cargoDocenteList;
     }
     
 }

@@ -14,11 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ec.edu.espe.gpr.dao.CargoDocenteDao;
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.IUsuarioDao;
 import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
 import ec.edu.espe.gpr.model.Cargo;
+import ec.edu.espe.gpr.model.CargoDocente;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.model.Usuper;
@@ -39,26 +41,27 @@ public class IDocenteServiceImpl implements IDocenteService  {
 	@Autowired
 	private IUsuarioDao usuarioDao;
     @Autowired
+	private CargoDocenteDao cargoDocenteDao;
+	@Autowired
 	private IEmailService emservice;
 	
 	@Transactional
 	@Override
-	public ResponseEntity<DocenteResponseRest> save(Docente docente, String id) {
+	public ResponseEntity<DocenteResponseRest> save(Docente docente, List<Cargo> cargos) {
 		
 		PasswordEncoder passeconder;
 		passeconder=new BCryptPasswordEncoder();
-		// TODO Auto-generated method stub
 		DocenteResponseRest response= new DocenteResponseRest();
 		List<Docente> list= new ArrayList<>();
 		try {
-			Optional<Cargo> cargo=cargoDao.findById(id);
+			/*Optional<Cargo> cargo=cargoDao.findById(id);
 			if(cargo.isPresent()) {
 				//docente.setCodCargo(cargo.get());
 			}else {
 				response.setMetadata("Respuesta nok", "-1", "No se encontro la categoria");
 				return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.NOT_FOUND);
 				
-			}
+			}*/
 			
 			Usuario usuario =new Usuario();
 			Long idLoc=usuarioDao.count()+1;
@@ -83,9 +86,14 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			docente.setCodigoUsuario(usuario);
 			Docente docentesave=docenteDao.save(docente);
 			
+			for (Cargo cargo : cargos) {
+				CargoDocente cargoDocente = new CargoDocente();
+				cargoDocente.setCodCargo(cargo);
+				cargoDocente.setCodigoDocente(docentesave);
+				cargoDocente.setFechaActCargoDocente(new Date());
+				this.cargoDocenteDao.save(cargoDocente);
+			}
 			if(docentesave!=null) {
-				
-				
 				list.add(docentesave);
 				
 				response.getDocenteResponse().setDocente(list);

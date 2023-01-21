@@ -6,17 +6,11 @@
 package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.EqualsAndHashCode;
 
@@ -39,10 +33,10 @@ public class Cargo implements Serializable {
     /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "codCargo",fetch= FetchType.LAZY)
     @JsonBackReference(value="docenteList")
     private List<Docente> docenteList;*/
-
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCargo",fetch= FetchType.LAZY)
     @JsonBackReference(value="cargoDocenteList")
-    private List<CargoDocente> cargoDocenteList;
+    private List<CargoDocente> cargoDocenteList;*/
 
     public Cargo() {
     }
@@ -91,14 +85,6 @@ public class Cargo implements Serializable {
 
     public static long getSerialversionuid() {
         return serialVersionUID;
-    }
-
-    public List<CargoDocente> getCargoDocenteList() {
-        return cargoDocenteList;
-    }
-
-    public void setCargoDocenteList(List<CargoDocente> cargoDocenteList) {
-        this.cargoDocenteList = cargoDocenteList;
     }
     
 }
