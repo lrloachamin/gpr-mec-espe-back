@@ -269,7 +269,7 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			for (CargoDocente cargoDocente : docente.getCargoDocenteList()) {
 				cargos.add(cargoDocente.getCodCargo());
 			}
-
+			
 			for (CargoDocente cargoDocente : cargoDocentes) {
 				indice = cargos.indexOf(cargoDocente.getCodCargo());
 				if(indice == -1){

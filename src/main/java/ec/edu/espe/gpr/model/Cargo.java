@@ -12,11 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
+//import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "cargo")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cargo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,5 +86,41 @@ public class Cargo implements Serializable {
     public static long getSerialversionuid() {
         return serialVersionUID;
     }
-    
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((codCargo == null) ? 0 : codCargo.hashCode());
+        result = prime * result + ((nombreCargo == null) ? 0 : nombreCargo.hashCode());
+        result = prime * result + ((descriCargo == null) ? 0 : descriCargo.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cargo other = (Cargo) obj;
+        if (codCargo == null) {
+            if (other.codCargo != null)
+                return false;
+        } else if (!codCargo.equals(other.codCargo))
+            return false;
+        if (nombreCargo == null) {
+            if (other.nombreCargo != null)
+                return false;
+        } else if (!nombreCargo.equals(other.nombreCargo))
+            return false;
+        if (descriCargo == null) {
+            if (other.descriCargo != null)
+                return false;
+        } else if (!descriCargo.equals(other.descriCargo))
+            return false;
+        return true;
+    }
 }
