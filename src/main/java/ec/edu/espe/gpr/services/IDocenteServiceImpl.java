@@ -256,16 +256,38 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			    usuarioF.get().setPuestoTrabajoDocente(docente.getPuestoTrabajoDocente());
 			    usuarioF.get().setCorreoDocente(docente.getCorreoDocente());
 			    //usuarioF.get().setCodCargo(docente.getCodCargo());
-
-				
-				
 			}else {
 				response.setMetadata("Respuesta nok", "-1", "No se encontro el usuario");
 				return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.NOT_FOUND);
-				
 			}
 	
 			Docente usuuariosave=docenteDao.save(usuarioF.get());
+			int indice;
+			List<CargoDocente> cargoDocentes = this.cargoDocenteDao.findByCodigoDocente(usuuariosave);
+			List<Cargo> cargos= new ArrayList<>();
+			
+			for (CargoDocente cargoDocente : docente.getCargoDocenteList()) {
+				cargos.add(cargoDocente.getCodCargo());
+			}
+
+			for (CargoDocente cargoDocente : cargoDocentes) {
+				indice = cargos.indexOf(cargoDocente.getCodCargo());
+				if(indice == -1){
+					this.cargoDocenteDao.delete(cargoDocente);
+				}
+				else
+					cargos.remove(indice);
+			}
+
+			if(cargos.size() > 0){
+				for (Cargo cargo : cargos) {
+					CargoDocente cargoDocente = new CargoDocente();
+					cargoDocente.setCodCargo(cargo);
+					cargoDocente.setCodigoDocente(usuuariosave);
+					cargoDocente.setFechaActCargoDocente(new Date());
+					this.cargoDocenteDao.save(cargoDocente);
+				}
+			}
 			
 			if(usuuariosave!=null) {
 				
