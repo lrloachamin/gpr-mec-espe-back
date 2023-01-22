@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ec.edu.espe.gpr.controller.FileController;
+import ec.edu.espe.gpr.dao.CargoDocenteDao;
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.ITareaDao;
@@ -24,6 +25,7 @@ import ec.edu.espe.gpr.dao.TareaIndicadorDao;
 import ec.edu.espe.gpr.enums.EstadoTareaDocenteEnum;
 import ec.edu.espe.gpr.enums.EstadoTareaEnum;
 import ec.edu.espe.gpr.model.Cargo;
+import ec.edu.espe.gpr.model.CargoDocente;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
 import ec.edu.espe.gpr.model.Tarea;
@@ -54,6 +56,8 @@ public class TareaDocenteService {
 	private TareaIndicadorDao tareaIndicadorDao;
     @Autowired
 	private ICargoDao cargoDao;
+    @Autowired
+	private CargoDocenteDao cargoDocenteDao;
     /*@Autowired
 	private IPerfilDao perfilDao;
 	@Autowired
@@ -115,12 +119,18 @@ public class TareaDocenteService {
 			return null;
 	}*/
 
-    public List<Docente> obtenerDocentesPorCargo(String codigoCargo) {
-        Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
+    public List<Docente> obtenerDocentesPorCargo(String codigoCargo,Integer codigoDocente) {
+        Cargo cargo = this.obtenerCargoPorCodigoCargo(codigoCargo);
+        Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
+        List<CargoDocente> cargoDocentes=this.cargoDocenteDao.findByCodCargoDistinctByCodigoDocente(cargo,docente);
+        //Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
         /*Perfil perfil = obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil));
 		List<Docente> docentes = this.obtenerDocentesPorPerfil(perfil);
         List<Docente> docentesPerfil = new ArrayList<>();*/
         List<Docente> docentes= new ArrayList<>();
+        for (CargoDocente cargoDocente : cargoDocentes) 
+            docentes.add(cargoDocente.getCodigoDocente()); 
+         
 		return docentes;//this.docenteDao.findByCodCargo(cargo);
         /*for (Docente docente : docentes) {
             if(docente.getCodCargo().equals(cargo))
