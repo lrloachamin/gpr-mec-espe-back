@@ -121,16 +121,17 @@ public class TareaDocenteService {
 
     public List<Docente> obtenerDocentesPorCargo(String codigoCargo,Integer codigoDocente) {
         Cargo cargo = this.obtenerCargoPorCodigoCargo(codigoCargo);
-        Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
-        List<CargoDocente> cargoDocentes=this.cargoDocenteDao.findByCodCargoDistinctByCodigoDocente(cargo,docente);
+        //Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
+        List<CargoDocente> cargoDocentes=this.cargoDocenteDao.findByCodCargo(cargo);
         //Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
         /*Perfil perfil = obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil));
 		List<Docente> docentes = this.obtenerDocentesPorPerfil(perfil);
-        List<Docente> docentesPerfil = new ArrayList<>();*/
+        List<Docente> docentesPerfil = new ArrayList<>();*/   
         List<Docente> docentes= new ArrayList<>();
-        for (CargoDocente cargoDocente : cargoDocentes) 
-            docentes.add(cargoDocente.getCodigoDocente()); 
-         
+        for (CargoDocente cargoDocente : cargoDocentes){ 
+            if(cargoDocente.getCodigoDocente().getCodigoDocente()!=codigoDocente)
+                docentes.add(cargoDocente.getCodigoDocente()); 
+        } 
 		return docentes;//this.docenteDao.findByCodCargo(cargo);
         /*for (Docente docente : docentes) {
             if(docente.getCodCargo().equals(cargo))

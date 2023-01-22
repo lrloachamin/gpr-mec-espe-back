@@ -10,5 +10,5 @@ import ec.edu.espe.gpr.model.Docente;
 
 public interface CargoDocenteDao extends JpaRepository<CargoDocente, Integer>{
     List<CargoDocente> findByCodigoDocente(Docente codigoDocente);
-    List<CargoDocente> findByCodCargoDistinctByCodigoDocente(Cargo codCargo,Docente codigoDocente);
+    List<CargoDocente> findByCodCargo(Cargo codCargo);
 }
