@@ -52,6 +52,9 @@ public class Tarea implements Serializable {
     @Column(name = "NOMBRE_TAREA")
     private String nombreTarea;
     
+    @Column(name = "TIPO_TAREA")
+    private String tipoTarea;
+
     @Column(name = "FECHA_CREACIONTAREA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreaciontarea;
