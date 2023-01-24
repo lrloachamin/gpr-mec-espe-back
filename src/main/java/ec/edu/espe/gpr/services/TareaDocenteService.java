@@ -248,6 +248,7 @@ public class TareaDocenteService {
         for (TareaDocente tareaDocente : tareaDocentes) {
             TareasRealizadas tRealizada = new TareasRealizadas();
             tRealizada.setNombreDocenteRevisor(tareaDocente.getCodigoTarea().getNombreDocenteRevisor());
+            tRealizada.setTipoTarea(tareaDocente.getCodigoTarea().getTipoTarea());
             tRealizada.setTipoProceso(tareaDocente.getCodigoTarea().getCodigoProyecto().getTipoProceso().getNombreTipoProceso());
             tRealizada.setNombreProyecto(tareaDocente.getCodigoTarea().getCodigoProyecto().getNombreProyecto());
             tRealizada.setNombreTarea(tareaDocente.getCodigoTarea().getNombreTarea());

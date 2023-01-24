@@ -5,6 +5,7 @@ import java.util.List;
 
 public class TareasRealizadas {
     private String nombreDocenteRevisor;
+    private String tipoTarea;
     private String tipoProceso;
     private String nombreProyecto;
     private String nombreTarea;
@@ -17,24 +18,6 @@ public class TareasRealizadas {
     private String nombreArchivo;
     private String urlArchivo;
     
-
-    public TareasRealizadas(String nombreDocenteRevisor, String tipoProceso, String nombreProyecto,
-            String nombreTarea, String prioridadTarea, String pesoTarea, Date fechaCreaciontarea,
-            Date fechaEntregaTarea, String responsable, List<TareaIndicador> tareaIndicadors, String nombreArchivo,
-            String urlArchivo) {
-        this.nombreDocenteRevisor = nombreDocenteRevisor;
-        this.tipoProceso = tipoProceso;
-        this.nombreProyecto = nombreProyecto;
-        this.nombreTarea = nombreTarea;
-        this.prioridadTarea = prioridadTarea;
-        this.pesoTarea = pesoTarea;
-        this.fechaCreaciontarea = fechaCreaciontarea;
-        this.fechaEntregaTarea = fechaEntregaTarea;
-        this.responsable = responsable;
-        this.tareaIndicadors = tareaIndicadors;
-        this.nombreArchivo = nombreArchivo;
-        this.urlArchivo = urlArchivo;
-    }
 
     public TareasRealizadas() {
     }
@@ -133,6 +116,14 @@ public class TareasRealizadas {
 
     public void setUrlArchivo(String urlArchivo) {
         this.urlArchivo = urlArchivo;
+    }
+
+    public String getTipoTarea() {
+        return tipoTarea;
+    }
+
+    public void setTipoTarea(String tipoTarea) {
+        this.tipoTarea = tipoTarea;
     }
 
 }
