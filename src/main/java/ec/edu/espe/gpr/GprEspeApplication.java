@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
+import ec.edu.espe.gpr.services.FileService;
 import ec.edu.espe.gpr.services.IEmailService;
 
 
@@ -22,6 +23,8 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.context.annotation.Bean;
+import org.springframework.boot.CommandLineRunner;
 
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
@@ -41,6 +44,14 @@ public class GprEspeApplication {
 		
 
 		
+	}
+
+	@Bean
+	CommandLineRunner init(FileService fileService) {
+		return (args) -> {
+			fileService.deleteAllFileGuia();
+			fileService.initFileGuia();
+		};
 	}
 	
 	@EventListener(ApplicationReadyEvent.class)

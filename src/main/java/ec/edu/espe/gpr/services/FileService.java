@@ -39,6 +39,17 @@ public class FileService {
         }
     }
 
+    public void initFileGuia() {
+        try {
+            Files.createDirectory(rootFileGuia);
+        } catch (IOException e) {
+            throw new RuntimeException("No se puede inicializar la carpeta uploads");
+        }
+    }
+    public void deleteAllFileGuia() {
+        FileSystemUtils.deleteRecursively(rootFileGuia.toFile());
+    }
+
     private TareaDocente obtenerTareaDocentePorCodigoTareaDocente(Integer codigoTareaDocente) {	
 		Optional<TareaDocente> tareaOpt = this.tareaDocenteDao.findById(codigoTareaDocente);
 		if (tareaOpt.isPresent())
