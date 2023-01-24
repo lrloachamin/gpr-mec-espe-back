@@ -35,6 +35,17 @@ public class ProyectoRestController {
         }
     }
 
+    @GetMapping(path = "/listarProyectosActivos")
+    public ResponseEntity<List<Proyecto>> listarProyectosActivos() {
+        try {
+            List<Proyecto> proyectos = this.proyectoService.listarProyectosActivos();
+            return ResponseEntity.ok(proyectos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
     @PostMapping
     public ResponseEntity<String> crear(@RequestBody Proyecto proyecto) {
         try {
