@@ -26,7 +26,8 @@ public class ProyectoService {
 	}
 
 	public List<Proyecto> listarProyectos() {
-        return this.proyectoDao.findAll();
+        //return this.proyectoDao.findAll();
+        return this.proyectoDao.findByEstadoProyecto(EstadoProyectoEnum.ACTIVE.getValue());
     }
 	
     public void crear(Proyecto proyecto) {
