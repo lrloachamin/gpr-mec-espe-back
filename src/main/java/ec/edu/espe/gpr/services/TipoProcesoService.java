@@ -49,7 +49,7 @@ public class TipoProcesoService {
         if(tipoProceso.getEstadoTipoProceso().equals(EstadoProcesoEnum.ACTIVE.getValue()))
             tipoProceso.setEstadoTipoProceso(EstadoProcesoEnum.INACTIVE.getValue());
         else
-            tipoProceso.setEstadoTipoProceso(EstadoProcesoEnum.INACTIVE.getValue());
+            tipoProceso.setEstadoTipoProceso(EstadoProcesoEnum.ACTIVE.getValue());
         this.tipoProcesoDao.save(tipoProceso);
     }
 }
