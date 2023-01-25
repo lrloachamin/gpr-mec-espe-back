@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,16 @@ public class TipoProcesoController {
         }
     }
 
+    @GetMapping(path = "/listarTiposProcesosActivos")
+    public ResponseEntity<List<TipoProceso>> listarTiposProcesosActivos() {
+        try {
+            List<TipoProceso> tipoProcesos = this.tipoProcesoService.listarTiposProcesosActivos();
+            return ResponseEntity.ok(tipoProcesos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<String> crear(@RequestBody TipoProceso tipoProceso) {
         try {
@@ -50,6 +61,17 @@ public class TipoProcesoController {
         try {
             this.tipoProcesoService.modificarDatos(tipoProceso);
             return ResponseEntity.ok(tipoProceso);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/cambiarEstado/{codigoTipoProceso}")
+    public ResponseEntity<String> cambiarEstado(@PathVariable Integer codigoTipoProceso) {
+        try {
+            this.tipoProcesoService.cambiarEstadoProceso(codigoTipoProceso);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

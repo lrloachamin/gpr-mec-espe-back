@@ -44,6 +44,9 @@ public class TipoProceso implements Serializable {
     
     @Column(name = "DESCRIPCION_TIPO_PROCESO")
     private String descripcionTipoProceso;
+
+    @Column(name = "ESTADO_TIPO_PROCESO")
+    private String estadoTipoProceso;
     
     /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoprocesoCODIGOTIPOPROCESO")
     private List<Proyecto> proyectoList;*/
