@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -450,12 +452,20 @@ public class TareaDocenteService {
     }
 
     public void aprobarTareaDocente(TareaDocente tareaDocente) {
+        DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
+        String date = dateFormat.format(new Date());
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
+        emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(), "GPR - Actividad: "+tareaDocente.getCodigoTarea().getNombreTarea(),
+							"Su Actividad ha sido aprobada en la fecha: "+ date);
         this.tareaDocenteDao.save(tareaDocente);    
     }
 
     public void denegarTareaDocente(TareaDocente tareaDocente) {
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.DENEGADO.getValue());
+        DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
+        String date = dateFormat.format(new Date());
+        emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(), "GPR - Actividad: "+tareaDocente.getCodigoTarea().getNombreTarea(),
+							"Su Actividad ha sido Denegada en la fecha: "+ date);
         this.tareaDocenteDao.save(tareaDocente);    
     }
 }
