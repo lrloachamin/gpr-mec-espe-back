@@ -414,6 +414,9 @@ public class TareaDocenteService {
             
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
         this.tareaDocenteDao.save(tareaDocente);
+        Tarea tarea = tareaDocente.getCodigoTarea();
+        tarea.setEstadoTarea(EstadoTareaEnum.INACTIVE.getValue().charAt(0));
+        this.tareaDao.save(tarea);
     }
 
     public void init() {
