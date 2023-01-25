@@ -419,6 +419,11 @@ public class TareaDocenteService {
         Tarea tarea = tareaDocente.getCodigoTarea();
         tarea.setEstadoTarea(EstadoTareaEnum.INACTIVE.getValue().charAt(0));
         this.tareaDao.save(tarea);
+        Docente docenteRevisor = this.docenteDao.findByCedulaDocente(tarea.getIdDocenteRevisor());
+        emservice.enviarCorreo(docenteRevisor.getCorreoDocente(), "GPR - Actividad: "+tareaDocente.getCodigoTarea().getNombreTarea(),
+							"La Actividad perteneciente a: "+ tareaDocente.getCodigoDocente().getNombreDocente()+" "+
+                            tareaDocente.getCodigoDocente().getApellidoDocente() +" ha sido enviada y debe ser revisada ");
+        
     }
 
     public void init() {
