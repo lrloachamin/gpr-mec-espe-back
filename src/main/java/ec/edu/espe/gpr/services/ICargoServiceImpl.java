@@ -46,7 +46,7 @@ public class ICargoServiceImpl implements ICargoService{
 	public ResponseEntity<CargoResponseRest> find() {
 		CargoResponseRest response= new CargoResponseRest();
 		try {
-			List<Cargo> cargo= (List<Cargo>) cargodao.findAll();
+			List<Cargo> cargo= (List<Cargo>) cargodao.findAllByOrderByNombreCargoAsc();
 			response.getCargoResponse().setCargo(cargo);
 			response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa");
 			
@@ -120,7 +120,7 @@ public class ICargoServiceImpl implements ICargoService{
 	}
 	
 	public List<Cargo> findAll(){
-		return this.cargodao.findAll();
+		return this.cargodao.findAllByOrderByNombreCargoAsc();
 	}
 
 	private Docente obtenerDocentePorCodigoDocente(Integer CodigoDocente) {	
