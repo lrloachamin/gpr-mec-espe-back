@@ -240,6 +240,11 @@ public class TareaDocenteService {
         return this.tareaDocenteDao.findByCodigoDocenteAndEstadoTareaDocenteNot(docente,EstadoTareaDocenteEnum.ACEPTADO.getValue());
     }
 
+    public List<CargoDocente> listarCargoDocentePorCodDocente(Integer codigoDocente){
+        Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
+        return this.cargoDocenteDao.findByCodigoDocente(docente);
+    }
+
     public List<TareaDocente> listarTodasTareasRevisar(){
         return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
     }

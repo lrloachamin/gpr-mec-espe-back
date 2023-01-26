@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import ec.edu.espe.gpr.model.CargoDocente;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
 import ec.edu.espe.gpr.model.Tarea;
@@ -133,6 +134,16 @@ public class TareaDocenteRestController {
     public ResponseEntity<List<TareaDocente>> listarDocentesTareasAsignadas(@PathVariable Integer codigoDocente) {
         try {
             List<TareaDocente> tareaDocentes = this.tareaDocenteService.listarDocentesTareasAsignadas(codigoDocente);
+            return ResponseEntity.ok(tareaDocentes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "/listarCargoDocentePorCodDocente/{codigoDocente}")
+    public ResponseEntity<List<CargoDocente>> listarCargoDocentePorCodDocente(@PathVariable Integer codigoDocente) {
+        try {
+            List<CargoDocente> tareaDocentes = this.tareaDocenteService.listarCargoDocentePorCodDocente(codigoDocente);
             return ResponseEntity.ok(tareaDocentes);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
