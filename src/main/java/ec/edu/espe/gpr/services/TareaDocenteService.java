@@ -45,126 +45,141 @@ import ec.edu.espe.gpr.model.TareasRealizadas;
 
 @Service
 public class TareaDocenteService {
-	
-	@Autowired
-	private ITareaDao tareaDao;
+
     @Autowired
-	private ITareaDocenteDao tareaDocenteDao;
+    private ITareaDao tareaDao;
     @Autowired
-	private IDocenteDao docenteDao;
+    private ITareaDocenteDao tareaDocenteDao;
     @Autowired
-	private IndicadorDao indicadorDao;
+    private IDocenteDao docenteDao;
     @Autowired
-	private TareaIndicadorDao tareaIndicadorDao;
+    private IndicadorDao indicadorDao;
     @Autowired
-	private ICargoDao cargoDao;
+    private TareaIndicadorDao tareaIndicadorDao;
     @Autowired
-	private CargoDocenteDao cargoDocenteDao;
-    /*@Autowired
-	private IPerfilDao perfilDao;
-	@Autowired
-	private IUsuarioPerfilDao usuarioperfilDao;*/
+    private ICargoDao cargoDao;
     @Autowired
-	private IEmailService emservice;
+    private CargoDocenteDao cargoDocenteDao;
+    /*
+     * @Autowired
+     * private IPerfilDao perfilDao;
+     * 
+     * @Autowired
+     * private IUsuarioPerfilDao usuarioperfilDao;
+     */
+    @Autowired
+    private IEmailService emservice;
 
     private final Path root = Paths.get("uploads");
     private final Path rootFileGuia = Paths.get("archivo_guia");
 
-	public Tarea obtenerTareaPorCodigoTarea(Integer codTarea) {	
-		Optional<Tarea> tareaOpt = this.tareaDao.findById(codTarea);
-		if (tareaOpt.isPresent())
-			return tareaOpt.get();
-		else 
-			return null;
-	}
+    public Tarea obtenerTareaPorCodigoTarea(Integer codTarea) {
+        Optional<Tarea> tareaOpt = this.tareaDao.findById(codTarea);
+        if (tareaOpt.isPresent())
+            return tareaOpt.get();
+        else
+            return null;
+    }
 
-    public Cargo obtenerCargoPorCodigoCargo(String codigoCargo) {	
-		Optional<Cargo> cargoOpt = this.cargoDao.findById(codigoCargo);
-		if (cargoOpt.isPresent())
-			return cargoOpt.get();
-		else 
-			return null;
-	}
+    public Cargo obtenerCargoPorCodigoCargo(String codigoCargo) {
+        Optional<Cargo> cargoOpt = this.cargoDao.findById(codigoCargo);
+        if (cargoOpt.isPresent())
+            return cargoOpt.get();
+        else
+            return null;
+    }
 
-    /*private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {	
-		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(usuario);
-		if (docenteOpt.isPresent())
-			return docenteOpt.get();
-		else 
-			return null;
-	}
+    /*
+     * private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {
+     * Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(usuario);
+     * if (docenteOpt.isPresent())
+     * return docenteOpt.get();
+     * else
+     * return null;
+     * }
+     * 
+     * private List<Docente> obtenerDocentesPorPerfil(Perfil perfil){
+     * List<Usuper> usupers= this.usuarioperfilDao.findByCodigoPerfil(perfil);
+     * List<Docente> docentes = new ArrayList<>();
+     * for (Usuper usuper : usupers) {
+     * Docente docente =
+     * this.obtenerDocentePorCodigoUsuario(usuper.getCodigoUsuario());
+     * docentes.add(docente);
+     * }
+     * return docentes;
+     * }
+     * 
+     * private Perfil obtenerPerfilPorCodigoPerfil(String codPerfil) {
+     * Optional<Perfil> perfilOpt = this.perfilDao.findById(codPerfil);
+     * if (perfilOpt.isPresent())
+     * return perfilOpt.get();
+     * else
+     * return null;
+     * }
+     * 
+     */
+    /*
+     * private Perfil obtenerPerfilPorCodigoPerfilPadre(Perfil codPerfil) {
+     * Optional<Perfil> perfilOpt =
+     * this.perfilDao.findByCodigoPerfilPadre(codPerfil);
+     * if (perfilOpt.isPresent())
+     * return perfilOpt.get();
+     * else
+     * return null;
+     * }
+     */
 
-    private List<Docente> obtenerDocentesPorPerfil(Perfil perfil){
-		List<Usuper> usupers= this.usuarioperfilDao.findByCodigoPerfil(perfil);
-		List<Docente> docentes = new ArrayList<>();
-		for (Usuper usuper : usupers) {
-			Docente docente = this.obtenerDocentePorCodigoUsuario(usuper.getCodigoUsuario());
-			docentes.add(docente);
-		}
-		return docentes;
-	}
-
-	private Perfil obtenerPerfilPorCodigoPerfil(String codPerfil) {	
-		Optional<Perfil> perfilOpt = this.perfilDao.findById(codPerfil);
-		if (perfilOpt.isPresent())
-			return perfilOpt.get();
-		else 
-			return null;
-	}
-
-    */
-    /*private Perfil obtenerPerfilPorCodigoPerfilPadre(Perfil codPerfil) {	
-		Optional<Perfil> perfilOpt = this.perfilDao.findByCodigoPerfilPadre(codPerfil);
-		if (perfilOpt.isPresent())
-			return perfilOpt.get();
-		else 
-			return null;
-	}*/
-
-    public List<Docente> obtenerDocentesPorCargo(String codigoCargo,Integer codigoDocente) {
+    public List<Docente> obtenerDocentesPorCargo(String codigoCargo, Integer codigoDocente) {
         Cargo cargo = this.obtenerCargoPorCodigoCargo(codigoCargo);
-        //Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
-        List<CargoDocente> cargoDocentes=this.cargoDocenteDao.findByCodCargo(cargo);
-        //Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
-        /*Perfil perfil = obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil));
-		List<Docente> docentes = this.obtenerDocentesPorPerfil(perfil);
-        List<Docente> docentesPerfil = new ArrayList<>();*/   
-        List<Docente> docentes= new ArrayList<>();
-        for (CargoDocente cargoDocente : cargoDocentes){ 
-            if(cargoDocente.getCodigoDocente().getCodigoDocente()!=codigoDocente)
-                docentes.add(cargoDocente.getCodigoDocente()); 
-        } 
-		return docentes;//this.docenteDao.findByCodCargo(cargo);
-        /*for (Docente docente : docentes) {
-            if(docente.getCodCargo().equals(cargo))
-                docentesPerfil.add(docente);       
-        }*/
-        /*Docente docente = docenteDao.findByNombreDocente("Admin");
-        int indice = docentes.indexOf(docente);
-        if(indice != -1)
-            docentes.remove(indice);
-        */
+        // Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
+        List<CargoDocente> cargoDocentes = this.cargoDocenteDao.findByCodCargo(cargo);
+        // Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
+        /*
+         * Perfil perfil =
+         * obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil))
+         * ;
+         * List<Docente> docentes = this.obtenerDocentesPorPerfil(perfil);
+         * List<Docente> docentesPerfil = new ArrayList<>();
+         */
+        List<Docente> docentes = new ArrayList<>();
+        for (CargoDocente cargoDocente : cargoDocentes) {
+            if (cargoDocente.getCodigoDocente().getCodigoDocente() != codigoDocente)
+                docentes.add(cargoDocente.getCodigoDocente());
+        }
+        return docentes;// this.docenteDao.findByCodCargo(cargo);
+        /*
+         * for (Docente docente : docentes) {
+         * if(docente.getCodCargo().equals(cargo))
+         * docentesPerfil.add(docente);
+         * }
+         */
+        /*
+         * Docente docente = docenteDao.findByNombreDocente("Admin");
+         * int indice = docentes.indexOf(docente);
+         * if(indice != -1)
+         * docentes.remove(indice);
+         */
 
-        //return docentesPerfil;
-	}
+        // return docentesPerfil;
+    }
 
-    public Docente obtenerDocentePorCodigoDocente(Integer codigoDocente) {	
-		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoDocente(codigoDocente);
-		if (docenteOpt.isPresent())
-			return docenteOpt.get();
-		else 
-			return null;
-	}
+    public Docente obtenerDocentePorCodigoDocente(Integer codigoDocente) {
+        Optional<Docente> docenteOpt = this.docenteDao.findByCodigoDocente(codigoDocente);
+        if (docenteOpt.isPresent())
+            return docenteOpt.get();
+        else
+            return null;
+    }
 
-    public TareaDocente obtenerIndicadorPorCodigoTareaDocente(Integer codigoTareaDocente) {	
-		Optional<TareaDocente> tareaDocenteOpt = this.tareaDocenteDao.findById(codigoTareaDocente);
-		if (tareaDocenteOpt.isPresent())
-			return tareaDocenteOpt.get();
-		else 
-			return null;
-	}
+    public TareaDocente obtenerIndicadorPorCodigoTareaDocente(Integer codigoTareaDocente) {
+        Optional<TareaDocente> tareaDocenteOpt = this.tareaDocenteDao.findById(codigoTareaDocente);
+        if (tareaDocenteOpt.isPresent())
+            return tareaDocenteOpt.get();
+        else
+            return null;
+    }
 
-	public List<TareaDocenteProyecto> listarTareasDocentes(String idDocente) {
+    public List<TareaDocenteProyecto> listarTareasDocentes(String idDocente) {
         List<TareaDocenteProyecto> tListDocenteProyecto = new ArrayList<>();
         List<Tarea> tarea = this.tareaDao.findByIdDocenteRevisor(idDocente);
         for (Tarea t : tarea) {
@@ -173,18 +188,19 @@ public class TareaDocenteService {
             Boolean check = true;
             List<Docente> docentes = new ArrayList<>();
             for (TareaDocente tDocente : t.getTareaDocenteList()) {
-                if(check){
+                if (check) {
                     List<Indicador> tareaIndicadors = new ArrayList<>();
 
-                    for (TareaIndicador tareaIndicador:tDocente.getTareaIndicadorList()){
-                        Indicador indicador = new Indicador(tareaIndicador.getIndicadorCODIGOINDICADOR().getCodigoIndicador(),
-                        tareaIndicador.getIndicadorCODIGOINDICADOR().getNombreIndicador(),
-                        tareaIndicador.getIndicadorCODIGOINDICADOR().getEstadoIndicador(),
-                        tareaIndicador.getDescripcionTareaIndicador());
+                    for (TareaIndicador tareaIndicador : tDocente.getTareaIndicadorList()) {
+                        Indicador indicador = new Indicador(
+                                tareaIndicador.getIndicadorCODIGOINDICADOR().getCodigoIndicador(),
+                                tareaIndicador.getIndicadorCODIGOINDICADOR().getNombreIndicador(),
+                                tareaIndicador.getIndicadorCODIGOINDICADOR().getEstadoIndicador(),
+                                tareaIndicador.getDescripcionTareaIndicador());
                         tareaIndicadors.add(indicador);
-                    } 
+                    }
                     tDocenteProyecto.setIndicadors(tareaIndicadors);
-                    check= false;
+                    check = false;
                 }
                 docentes.add(tDocente.getCodigoDocente());
             }
@@ -198,8 +214,8 @@ public class TareaDocenteService {
         List<Docente> docentes = this.docenteDao.findAll();
         Docente docente = docenteDao.findByNombreDocente("Admin");
         int indice = docentes.indexOf(docente);
-        if(indice != -1)
-            docentes.remove(indice);    
+        if (indice != -1)
+            docentes.remove(indice);
         return docentes;
     }
 
@@ -207,26 +223,27 @@ public class TareaDocenteService {
         return this.indicadorDao.findAll();
     }
 
-    public List<TareaDocente> listarTareasEntregadas(String cedulaDocenteRevisor){
-        return this.tareaDocenteDao.findByEstadoTareaDocenteAndCedulaDocenteRevisor(EstadoTareaDocenteEnum.EN_REVISION.getText(),cedulaDocenteRevisor);
+    public List<TareaDocente> listarTareasEntregadas(String cedulaDocenteRevisor) {
+        return this.tareaDocenteDao.findByEstadoTareaDocenteAndCedulaDocenteRevisor(
+                EstadoTareaDocenteEnum.EN_REVISION.getText(), cedulaDocenteRevisor);
     }
 
-    public List<TareaDocente> listarTareasAceptadas(){
+    public List<TareaDocente> listarTareasAceptadas() {
         return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getText());
     }
 
     public List<Docente> listarDocentesTareaAsignada(Tarea codigoTarea) {
-        List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoTarea(codigoTarea);
+        List<TareaDocente> tareas = this.tareaDocenteDao.findByCodigoTarea(codigoTarea);
         List<Docente> docentes = new ArrayList<>();
-        for(TareaDocente tarea : tareas){
+        for (TareaDocente tarea : tareas) {
             docentes.add(tarea.getCodigoDocente());
-        } 
+        }
         return docentes;
     }
 
     public List<TareaDocente> listarTareaAsignadaPorDocente(Integer codigoDocente) {
         Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
-        List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoDocente(docente);
+        List<TareaDocente> tareas = this.tareaDocenteDao.findByCodigoDocente(docente);
         return tareas;
     }
 
@@ -235,98 +252,97 @@ public class TareaDocenteService {
         return tareaDocente.getTareaIndicadorList();
     }
 
-    public List<TareaDocente> listarDocentesTareasAsignadas(Integer codigoDocente){
+    public List<TareaDocente> listarDocentesTareasAsignadas(Integer codigoDocente) {
         Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
-        return this.tareaDocenteDao.findByCodigoDocenteAndEstadoTareaDocenteNot(docente,EstadoTareaDocenteEnum.ACEPTADO.getValue());
+        return this.tareaDocenteDao.findByCodigoDocenteAndEstadoTareaDocenteNot(docente,
+                EstadoTareaDocenteEnum.ACEPTADO.getValue());
     }
 
-    public List<CargoDocente> listarCargoDocentePorCodDocente(Integer codigoDocente){
+    public List<CargoDocente> listarCargoDocentePorCodDocente(Integer codigoDocente) {
         Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
         return this.cargoDocenteDao.findByCodigoDocente(docente);
     }
 
-    public List<TareaDocente> listarTodasTareasRevisar(){
+    public List<TareaDocente> listarTodasTareasRevisar() {
         return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
     }
 
-    public List<TareasRealizadas> listarTodasTareasRevisadas(){
-        List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
+    public List<TareasRealizadas> listarTodasTareasRevisadas() {
+        List<TareaDocente> tareaDocentes = this.tareaDocenteDao
+                .findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
         List<TareasRealizadas> tRealizadas = new ArrayList<>();
         for (TareaDocente tareaDocente : tareaDocentes) {
             TareasRealizadas tRealizada = new TareasRealizadas();
             tRealizada.setNombreDocenteRevisor(tareaDocente.getCodigoTarea().getNombreDocenteRevisor());
             tRealizada.setTipoTarea(tareaDocente.getCodigoTarea().getTipoTarea());
-            tRealizada.setTipoProceso(tareaDocente.getCodigoTarea().getCodigoProyecto().getTipoProceso().getNombreTipoProceso());
+            tRealizada.setTipoProceso(
+                    tareaDocente.getCodigoTarea().getCodigoProyecto().getTipoProceso().getNombreTipoProceso());
             tRealizada.setNombreProyecto(tareaDocente.getCodigoTarea().getCodigoProyecto().getNombreProyecto());
             tRealizada.setNombreTarea(tareaDocente.getCodigoTarea().getNombreTarea());
             tRealizada.setPrioridadTarea(tareaDocente.getCodigoTarea().getPrioridadTarea());
-            tRealizada.setPesoTarea(tareaDocente.getCodigoTarea().getValorPesoTarea()+" "+tareaDocente.getCodigoTarea().getPesoTarea());
+            tRealizada.setPesoTarea(tareaDocente.getCodigoTarea().getValorPesoTarea() + " "
+                    + tareaDocente.getCodigoTarea().getPesoTarea());
             tRealizada.setFechaCreaciontarea(tareaDocente.getCodigoTarea().getFechaCreaciontarea());
             tRealizada.setFechaEntregaTarea(tareaDocente.getCodigoTarea().getFechaEntregaTarea());
-            tRealizada.setResponsable(tareaDocente.getCodigoDocente().getNombreDocente()+" "+tareaDocente.getCodigoDocente().getApellidoDocente());
+            tRealizada.setResponsable(tareaDocente.getCodigoDocente().getNombreDocente() + " "
+                    + tareaDocente.getCodigoDocente().getApellidoDocente());
             tRealizada.setTareaIndicadors(this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaDocente));
-            if(tareaDocente.getNombreArchivoTareaDocente()!="" || tareaDocente.getNombreArchivoTareaDocente()!=null){
-                tRealizada.setNombreArchivo(tareaDocente.getNombreArchivoTareaDocente());    
+            if (tareaDocente.getNombreArchivoTareaDocente() != ""
+                    || tareaDocente.getNombreArchivoTareaDocente() != null) {
+                tRealizada.setNombreArchivo(tareaDocente.getNombreArchivoTareaDocente());
                 String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile",
-                    tareaDocente.getArchivoTareaDocente()).build().toString();
+                        tareaDocente.getArchivoTareaDocente()).build().toString();
                 tRealizada.setUrlArchivo(url);
             }
             tRealizadas.add(tRealizada);
         }
         return tRealizadas;
     }
-	
-    public void crear(TareaDocenteProyecto tareaDocenteProyecto,MultipartFile file) {
+
+    public void crear(TareaDocenteProyecto tareaDocenteProyecto, MultipartFile file) {
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
-        
-        Tarea tarea =this.tareaDao.save(tareaDocenteProyecto.getTarea());
 
-        if(file!=null){
+        Tarea tarea = this.tareaDao.save(tareaDocenteProyecto.getTarea());
+
+        if (file != null) {
             String extensionArchivo = "";
             int i = file.getOriginalFilename().toString().lastIndexOf('.');
-            
-            if (i > 0) 
-                extensionArchivo = file.getOriginalFilename().toString().substring(i+1);
-            
-            tarea.setArchivoTarea(tarea.getCodigoTarea().toString()+"."+extensionArchivo);
+
+            if (i > 0)
+                extensionArchivo = file.getOriginalFilename().toString().substring(i + 1);
+
+            tarea.setArchivoTarea(tarea.getCodigoTarea().toString() + "." + extensionArchivo);
             tarea.setNombreArchivoTarea(file.getOriginalFilename());
             tarea = this.tareaDao.save(tarea);
-            this.saveFileGuia(file,tarea.getArchivoTarea()); 
+            this.saveFileGuia(file, tarea.getArchivoTarea());
         }
 
-        for(Docente docente :tareaDocenteProyecto.getDocentes()){
+        for (Docente docente : tareaDocenteProyecto.getDocentes()) {
             TareaDocente t = new TareaDocente();
             t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
             t.setCodigoDocente(docente);
             t.setCodigoTarea(tarea);
             t.setCedulaDocenteRevisor(tarea.getIdDocenteRevisor());
-            emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: "+tarea.getNombreTarea(),
-							"Se ha asignado una nueva tarea de prioridad "+tarea.getPrioridadTarea() + 
-                            ", y debe ser realizada hasta la fecha de:"+tarea.getFechaEntregaTarea());
-            
-            TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
+            emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: " + tarea.getNombreTarea(),
+                    "Se ha asignado una nueva tarea de prioridad " + tarea.getPrioridadTarea() +
+                            ", y debe ser realizada hasta la fecha de:" + tarea.getFechaEntregaTarea());
+
+            TareaDocente tDocenteBD = this.tareaDocenteDao.save(t);
             for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
                 TareaIndicador indicadorBD = new TareaIndicador();
                 indicadorBD.setFechaCreacionIndicador(new Date());
                 indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
                 indicadorBD.setDescripcionTareaIndicador(indicador.getDescripcionIndicador());
-                indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
-                this.tareaIndicadorDao.save(indicadorBD);          
+                indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);
+                this.tareaIndicadorDao.save(indicadorBD);
             }
         }
     }
 
-
     private void saveFileGuia(MultipartFile file, String nameFile) {
         try {
-            File directorio = new File(this.rootFileGuia.toString());
-            if (!directorio.exists()) {
-                directorio.mkdirs();
-            }
-            File archivo = new File(this.rootFileGuia.resolve(nameFile).toString());
-            if (archivo.exists())
-                archivo.delete();
+            Files.deleteIfExists(this.rootFileGuia.resolve(nameFile));    
             Files.copy(file.getInputStream(), this.rootFileGuia.resolve(nameFile));
         } catch (IOException e) {
             throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
@@ -337,98 +353,111 @@ public class TareaDocenteService {
         this.tareaDao.save(tareaDocenteProyecto.getTarea());
         List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByCodigoTarea(tareaDocenteProyecto.getTarea());
         int indice;
-        //Boolean check = true;
-        //TareaDocente tareaD = new TareaDocente(); 
-        for(TareaDocente tareaDocente : tareaDocentes){
-            /*if(check){
-                tareaD = tareaDocente;
-                check = false;
-            }*/
+        // Boolean check = true;
+        // TareaDocente tareaD = new TareaDocente();
+        for (TareaDocente tareaDocente : tareaDocentes) {
+            /*
+             * if(check){
+             * tareaD = tareaDocente;
+             * check = false;
+             * }
+             */
             indice = tareaDocenteProyecto.getDocentes().indexOf(tareaDocente.getCodigoDocente());
-            if(indice == -1){
+            if (indice == -1) {
 
-                for (TareaIndicador tIndicador : tareaDocente.getTareaIndicadorList()) 
-                    this.tareaIndicadorDao.delete(tIndicador);   
+                for (TareaIndicador tIndicador : tareaDocente.getTareaIndicadorList())
+                    this.tareaIndicadorDao.delete(tIndicador);
 
                 this.tareaDocenteDao.delete(tareaDocente);
-            }
-            else
+            } else
                 tareaDocenteProyecto.getDocentes().remove(indice);
         }
-    
-        if(tareaDocenteProyecto.getDocentes().size() > 0){
-            for(Docente docente : tareaDocenteProyecto.getDocentes()){
+
+        if (tareaDocenteProyecto.getDocentes().size() > 0) {
+            for (Docente docente : tareaDocenteProyecto.getDocentes()) {
                 TareaDocente t = new TareaDocente();
                 t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
                 t.setCodigoDocente(docente);
                 t.setCodigoTarea(tareaDocenteProyecto.getTarea());
-                emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: "+tareaDocenteProyecto.getTarea().getNombreTarea(),
-							"Se ha asignado una nueva tarea de prioridad "+tareaDocenteProyecto.getTarea().getPrioridadTarea() + 
-                            ", y debe ser realizada hasta la fecha de:"+tareaDocenteProyecto.getTarea().getFechaEntregaTarea());
-                TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
+                emservice.enviarCorreo(docente.getCorreoDocente(),
+                        "GPR - Nueva Tarea: " + tareaDocenteProyecto.getTarea().getNombreTarea(),
+                        "Se ha asignado una nueva tarea de prioridad "
+                                + tareaDocenteProyecto.getTarea().getPrioridadTarea() +
+                                ", y debe ser realizada hasta la fecha de:"
+                                + tareaDocenteProyecto.getTarea().getFechaEntregaTarea());
+                TareaDocente tDocenteBD = this.tareaDocenteDao.save(t);
                 for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
                     TareaIndicador indicadorBD = new TareaIndicador();
                     indicadorBD.setFechaCreacionIndicador(new Date());
                     indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
                     indicadorBD.setDescripcionTareaIndicador(indicador.getDescripcionIndicador());
-                    indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
-                    this.tareaIndicadorDao.save(indicadorBD);          
+                    indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);
+                    this.tareaIndicadorDao.save(indicadorBD);
                 }
             }
         }
-        
-        /* 
-    
-        List<TareaIndicador> tareaIndicadors = this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaD);
-        for(TareaIndicador tareaIndicador : tareaIndicadors){
-            indice = tareaDocenteProyecto.getIndicadors().indexOf(tareaIndicador.getIndicadorCODIGOINDICADOR());
-            if(indice == -1)
-                this.tareaIndicadorDao.delete(tareaIndicador);
-            else
-                tareaDocenteProyecto.getIndicadors().remove(indice);//eliminar los indicadores de esta tarea
-        }
-        */
-    
-        /*if(tareaDocenteProyecto.getIndicadors().size() > 0){
-            for(Indicador indicador : tareaDocenteProyecto.getIndicadors()){
-                TareaIndicador indicadorBD = new TareaIndicador();
-                indicadorBD.setFechaCreacionIndicador(new Date());
-                indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
-                indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
-                this.tareaIndicadorDao.save(indicadorBD);
-                this.tareaIndicadorDao.save(tIndicador);
-            }
-        }*/
+
+        /*
+         * 
+         * List<TareaIndicador> tareaIndicadors =
+         * this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaD);
+         * for(TareaIndicador tareaIndicador : tareaIndicadors){
+         * indice = tareaDocenteProyecto.getIndicadors().indexOf(tareaIndicador.
+         * getIndicadorCODIGOINDICADOR());
+         * if(indice == -1)
+         * this.tareaIndicadorDao.delete(tareaIndicador);
+         * else
+         * tareaDocenteProyecto.getIndicadors().remove(indice);//eliminar los
+         * indicadores de esta tarea
+         * }
+         */
+
+        /*
+         * if(tareaDocenteProyecto.getIndicadors().size() > 0){
+         * for(Indicador indicador : tareaDocenteProyecto.getIndicadors()){
+         * TareaIndicador indicadorBD = new TareaIndicador();
+         * indicadorBD.setFechaCreacionIndicador(new Date());
+         * indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
+         * indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);
+         * this.tareaIndicadorDao.save(indicadorBD);
+         * this.tareaIndicadorDao.save(tIndicador);
+         * }
+         * }
+         */
         return new TareaDocente();
     }
 
-    public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors,MultipartFile file,Integer codigoTareaDocente) {
+    public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors, MultipartFile file,
+            Integer codigoTareaDocente) {
         TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
-        if(file!=null){
-            /*String extensionArchivo = "";
-            int i = file.getOriginalFilename().toString().lastIndexOf('.');
-            
-            if (i > 0) 
-                extensionArchivo = file.getOriginalFilename().toString().substring(i+1);
-            */
-            tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString()+".pdf");//Revisar
+        if (file != null) {
+            /*
+             * String extensionArchivo = "";
+             * int i = file.getOriginalFilename().toString().lastIndexOf('.');
+             * 
+             * if (i > 0)
+             * extensionArchivo = file.getOriginalFilename().toString().substring(i+1);
+             */
+            tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString() + ".pdf");// Revisar
             tareaDocente.setNombreArchivoTareaDocente(file.getOriginalFilename());
-            this.saveFile(file,tareaDocente.getArchivoTareaDocente());
+
+            this.saveFile(file, tareaDocente.getArchivoTareaDocente());
         }
-        
-        for (TareaIndicador tIndicador : tareaIndicadors) 
-            this.tareaIndicadorDao.save(tIndicador);    
-            
+
+        for (TareaIndicador tIndicador : tareaIndicadors)
+            this.tareaIndicadorDao.save(tIndicador);
+
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
         this.tareaDocenteDao.save(tareaDocente);
         Tarea tarea = tareaDocente.getCodigoTarea();
         tarea.setEstadoTarea(EstadoTareaEnum.INACTIVE.getValue().charAt(0));
         this.tareaDao.save(tarea);
         Docente docenteRevisor = this.docenteDao.findByCedulaDocente(tarea.getIdDocenteRevisor());
-        emservice.enviarCorreo(docenteRevisor.getCorreoDocente(), "GPR - Actividad: "+tareaDocente.getCodigoTarea().getNombreTarea(),
-							"La Actividad perteneciente a: "+ tareaDocente.getCodigoDocente().getNombreDocente()+" "+
-                            tareaDocente.getCodigoDocente().getApellidoDocente() +" ha sido enviada y debe ser revisada ");
-        
+        emservice.enviarCorreo(docenteRevisor.getCorreoDocente(),
+                "GPR - Actividad: " + tareaDocente.getCodigoTarea().getNombreTarea(),
+                "La Actividad perteneciente a: " + tareaDocente.getCodigoDocente().getNombreDocente() + " " +
+                        tareaDocente.getCodigoDocente().getApellidoDocente() + " ha sido enviada y debe ser revisada ");
+
     }
 
     public void init() {
@@ -441,11 +470,11 @@ public class TareaDocenteService {
 
     private void saveFile(MultipartFile file, String nameFile) {
         try {
-            //this.init();
-            //copy (que queremos copiar, a donde queremos copiar)
-            File archivo = new File(this.root.resolve(nameFile).toString());
-            if (archivo.exists())
-                archivo.delete();
+            // copy (que queremos copiar, a donde queremos copiar)
+            // File archivo = new File(this.root.resolve(nameFile).toString());
+            // if (archivo.exists())
+            // archivo.delete();
+            Files.deleteIfExists(this.root.resolve(nameFile));
             Files.copy(file.getInputStream(), this.root.resolve(nameFile));
         } catch (IOException e) {
             throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
@@ -453,29 +482,36 @@ public class TareaDocenteService {
     }
 
     public void guardarArchivoTareaAsignadaAlProfesor(MultipartFile file, Integer codigoTareaDocente) {
-        /*TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
-        this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString()+".pdf");
-        tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString()+".pdf");//Revisar
-        tareaDocente.setNombreArchivoTareaDocente(file.getOriginalFilename());
-        tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
-        this.tareaDocenteDao.save(tareaDocente);    */
+        /*
+         * TareaDocente tareaDocente =
+         * this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
+         * this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString()+".pdf");
+         * tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().
+         * toString()+".pdf");//Revisar
+         * tareaDocente.setNombreArchivoTareaDocente(file.getOriginalFilename());
+         * tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.
+         * getValue());
+         * this.tareaDocenteDao.save(tareaDocente);
+         */
     }
 
     public void aprobarTareaDocente(TareaDocente tareaDocente) {
         DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
         String date = dateFormat.format(new Date());
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
-        emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(), "GPR - Actividad: "+tareaDocente.getCodigoTarea().getNombreTarea(),
-							"Su Actividad ha sido aprobada en la fecha: "+ date);
-        this.tareaDocenteDao.save(tareaDocente);    
+        emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(),
+                "GPR - Actividad: " + tareaDocente.getCodigoTarea().getNombreTarea(),
+                "Su Actividad ha sido aprobada en la fecha: " + date);
+        this.tareaDocenteDao.save(tareaDocente);
     }
 
     public void denegarTareaDocente(TareaDocente tareaDocente) {
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.DENEGADO.getValue());
         DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
         String date = dateFormat.format(new Date());
-        emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(), "GPR - Actividad: "+tareaDocente.getCodigoTarea().getNombreTarea(),
-							"Su Actividad ha sido Denegada en la fecha: "+ date);
-        this.tareaDocenteDao.save(tareaDocente);    
+        emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(),
+                "GPR - Actividad: " + tareaDocente.getCodigoTarea().getNombreTarea(),
+                "Su Actividad ha sido Denegada en la fecha: " + date);
+        this.tareaDocenteDao.save(tareaDocente);
     }
 }
