@@ -300,7 +300,7 @@ public class TareaDocenteService {
     }
 
     public void crear(TareaDocenteProyecto tareaDocenteProyecto, MultipartFile file) {
-        tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
+        //tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
 
         Tarea tarea = this.tareaDao.save(tareaDocenteProyecto.getTarea());
