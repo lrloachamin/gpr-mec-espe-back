@@ -199,8 +199,22 @@ public class TareaDocenteRestController {
     @PutMapping("/modificar")
     public ResponseEntity<TareaDocente> modificar(@RequestBody TareaDocenteProyecto tareaDocenteProyecto) {
         try {
-            TareaDocente tareaDocente = this.tareaDocenteService.modificarDatos(tareaDocenteProyecto);
+            TareaDocente tareaDocente = this.tareaDocenteService.modificarDatos(tareaDocenteProyecto,null);
             return ResponseEntity.ok(tareaDocente);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping(path = "/editarTareaConArchivo")
+    public ResponseEntity<String> editarTareaConArchivo(@RequestParam("tareaDocenteProyecto") String strTareaDocenteProyecto,
+            @RequestParam("file") MultipartFile file ) {
+        try {
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();
+            TareaDocenteProyecto tareaDocenteProyecto = gson.fromJson(strTareaDocenteProyecto, TareaDocenteProyecto.class);
+            this.tareaDocenteService.crear(tareaDocenteProyecto,file);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

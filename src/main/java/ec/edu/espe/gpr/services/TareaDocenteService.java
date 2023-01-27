@@ -342,15 +342,32 @@ public class TareaDocenteService {
 
     private void saveFileGuia(MultipartFile file, String nameFile) {
         try {
-            Files.deleteIfExists(this.rootFileGuia.resolve(nameFile));    
+            // Files.deleteIfExists(this.rootFileGuia.resolve(nameFile));
             Files.copy(file.getInputStream(), this.rootFileGuia.resolve(nameFile));
         } catch (IOException e) {
             throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
         }
     }
 
-    public TareaDocente modificarDatos(TareaDocenteProyecto tareaDocenteProyecto) {
-        this.tareaDao.save(tareaDocenteProyecto.getTarea());
+    public TareaDocente modificarDatos(TareaDocenteProyecto tareaDocenteProyecto, MultipartFile file) {
+        Tarea tarea = this.tareaDao.save(tareaDocenteProyecto.getTarea());
+        if (file != null) {
+            try {
+                Files.deleteIfExists(this.rootFileGuia.resolve(tarea.getArchivoTarea()));
+            } catch (IOException e) {
+                throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
+            }
+            String extensionArchivo = "";
+            int i = file.getOriginalFilename().toString().lastIndexOf('.');
+
+            if (i > 0)
+                extensionArchivo = file.getOriginalFilename().toString().substring(i + 1);
+
+            tarea.setArchivoTarea(tarea.getCodigoTarea().toString() + "." + extensionArchivo);
+            tarea.setNombreArchivoTarea(file.getOriginalFilename());
+            tarea = this.tareaDao.save(tarea);
+            this.saveFileGuia(file, tarea.getArchivoTarea());
+        }
         List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByCodigoTarea(tareaDocenteProyecto.getTarea());
         int indice;
         // Boolean check = true;
@@ -496,22 +513,22 @@ public class TareaDocenteService {
     }
 
     public void aprobarTareaDocente(TareaDocente tareaDocente) {
-        DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
-        String date = dateFormat.format(new Date());
+        /*DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
+        String date = dateFormat.format(new Date());*/
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
         emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(),
                 "GPR - Actividad: " + tareaDocente.getCodigoTarea().getNombreTarea(),
-                "Su Actividad ha sido aprobada en la fecha: " + date);
+                "Su Actividad ha sido aprobada: ");
         this.tareaDocenteDao.save(tareaDocente);
     }
 
     public void denegarTareaDocente(TareaDocente tareaDocente) {
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.DENEGADO.getValue());
-        DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
-        String date = dateFormat.format(new Date());
+        /*DateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss z");
+        String date = dateFormat.format(new Date());*/
         emservice.enviarCorreo(tareaDocente.getCodigoDocente().getCorreoDocente(),
                 "GPR - Actividad: " + tareaDocente.getCodigoTarea().getNombreTarea(),
-                "Su Actividad ha sido Denegada en la fecha: " + date);
+                "Su Actividad ha sido Denegada: ");
         this.tareaDocenteDao.save(tareaDocente);
     }
 }
