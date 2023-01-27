@@ -342,7 +342,7 @@ public class TareaDocenteService {
 
     private void saveFileGuia(MultipartFile file, String nameFile) {
         try {
-            // Files.deleteIfExists(this.rootFileGuia.resolve(nameFile));
+            Files.deleteIfExists(this.rootFileGuia.resolve(nameFile));
             Files.copy(file.getInputStream(), this.rootFileGuia.resolve(nameFile));
         } catch (IOException e) {
             throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
