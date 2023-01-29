@@ -73,7 +73,27 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			
 			nombreUsuario = Normalizer.normalize(nombreUsuario, Normalizer.Form.NFD);
 			nombreUsuario = nombreUsuario.replaceAll("[^\\p{ASCII}]","");
+			//Usuario repetido
+			String usuariotemp=nombreUsuario;
+			
+			for(int i=1; i!=0;i++) {
+				
+				if(usuariosRepetido(nombreUsuario)==0) {
+					break;
+					
+				}else {
+					
+					String numeroUsuario=Integer.toString(i);			
+					nombreUsuario=usuariotemp.concat(numeroUsuario);			
+				}
+			
+			}
+			
+			System.out.println(nombreUsuario);
+						
 			usuario.setNombreUsuario(nombreUsuario);
+
+			
 			usuario.setPasswUsuario(passeconder.encode(docente.getCedulaDocente()));
 			usuario.setFechaCreUsu(new Date());
 			usuario.setFechaModUsuario(new Date());
@@ -114,6 +134,25 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
+	
+	
+	private int usuariosRepetido(String usuario) {
+		int resp=0;
+		
+		List<Usuario> list= new ArrayList<>();
+		
+		list=(List<Usuario>)usuarioDao.findAll();
+		
+		for(Usuario u : list) {
+			
+			if(usuario.equals(u.getNombreUsuario())) {
+				resp=1;
+			}			
+		}
+		
+		return resp;
+		}
+
 	
 	@Override
 	@Transactional(readOnly = true)
