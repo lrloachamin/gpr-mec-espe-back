@@ -219,6 +219,16 @@ public class TareaDocenteService {
         return docentes;
     }
 
+    public List<Docente> listarDocentesTareasAsignadas() {
+        List<Docente> docentes = this.docenteDao.findAll();
+        List<Docente> docentesAsignados = new ArrayList<>();
+        for (Docente docente : docentes) {
+            if(docente.getTareaDocenteList().size()>0)
+                docentesAsignados.add(docente);
+        }
+        return docentesAsignados;
+    }
+
     public List<Indicador> listarIndicadores() {
         return this.indicadorDao.findAll();
     }
