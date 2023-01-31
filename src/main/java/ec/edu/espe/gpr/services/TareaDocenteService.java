@@ -222,9 +222,14 @@ public class TareaDocenteService {
     public List<Docente> listarDocentesTareasAsignadas() {
         List<Docente> docentes = this.docenteDao.findAll();
         List<Docente> docentesAsignados = new ArrayList<>();
+        
         for (Docente docente : docentes) {
-            if(docente.getTareaDocenteList().size()>0)
-                docentesAsignados.add(docente);
+            for (TareaDocente tareaDocente : docente.getTareaDocenteList()) {
+                if(!tareaDocente.getEstadoTareaDocente().equals(EstadoTareaDocenteEnum.ACEPTADO.getValue())) {
+                    docentesAsignados.add(docente);
+                    break;
+                }
+            }  
         }
         return docentesAsignados;
     }
