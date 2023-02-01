@@ -330,11 +330,15 @@ public class TareaDocenteService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         dateWithTimeZone = formatter.parse(sDate); 
         } catch (Exception e) {
-            // TODO: handle exception
+            System.out.println("Error de subida");
         }
         
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(dateWithTimeZone);
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
+
+        System.out.println("Fecsa actual:");
+        System.out.println(dateWithTimeZone);
+
 
         Tarea tarea = this.tareaDao.save(tareaDocenteProyecto.getTarea());
 
