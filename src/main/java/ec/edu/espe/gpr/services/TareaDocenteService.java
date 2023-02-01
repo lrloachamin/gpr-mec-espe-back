@@ -319,20 +319,14 @@ public class TareaDocenteService {
     public void crear(TareaDocenteProyecto tareaDocenteProyecto, MultipartFile file) {
         Date dateWithTimeZone = new Date(); 
         try {
-         Calendar cal = Calendar.getInstance();
-        Date date = new Date();
-        cal.set(date.getYear(), date.getMonth(),date.getDate(),date.getHours(),date.getMinutes());
-        // format with tz
-        TimeZone timeZone = TimeZone.getTimeZone("America/Guayaquil");
-        SimpleDateFormat formatterWithTimeZone = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        formatterWithTimeZone.setTimeZone(timeZone);
-        String sDate = formatterWithTimeZone.format(date);
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        dateWithTimeZone = formatter.parse(sDate); 
+            TimeZone timeZone = TimeZone.getTimeZone("America/Guayaquil");
+            SimpleDateFormat formatterWithTimeZone = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            formatterWithTimeZone.setTimeZone(timeZone);
+            String sDate = formatterWithTimeZone.format(dateWithTimeZone);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            dateWithTimeZone = formatter.parse(sDate); 
         } catch (Exception e) {
-            System.out.println("Error de subida");
         }
-        
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(dateWithTimeZone);
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
 
