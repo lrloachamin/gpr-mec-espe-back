@@ -58,7 +58,7 @@ public class Tarea implements Serializable {
 
     @Column(name = "FECHA_CREACIONTAREA")
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "dd-MM-YYYY HH:mm:ss" , timezone="UTC") 
+    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "yyyy-MM-dd HH:mm:ss" , timezone="UTC") 
     private Date fechaCreaciontarea;
     
     @Column(name = "PRIORIDAD_TAREA")
