@@ -317,22 +317,8 @@ public class TareaDocenteService {
     }
 
     public void crear(TareaDocenteProyecto tareaDocenteProyecto, MultipartFile file) {
-        Date dateWithTimeZone = new Date(); 
-        try {
-            TimeZone timeZone = TimeZone.getTimeZone("America/Guayaquil");
-            SimpleDateFormat formatterWithTimeZone = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            formatterWithTimeZone.setTimeZone(timeZone);
-            String sDate = formatterWithTimeZone.format(dateWithTimeZone);
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            dateWithTimeZone = formatter.parse(sDate); 
-        } catch (Exception e) {
-        }
-        tareaDocenteProyecto.getTarea().setFechaCreaciontarea(dateWithTimeZone);
+        tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
-
-        System.out.println("Fecsa actual:");
-        System.out.println(dateWithTimeZone);
-
 
         Tarea tarea = this.tareaDao.save(tareaDocenteProyecto.getTarea());
 

@@ -1,8 +1,9 @@
 package ec.edu.espe.gpr;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -13,10 +14,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.EventListener;
 
-
 import ec.edu.espe.gpr.dao.IUsuarioDao;
-import ec.edu.espe.gpr.model.Docente;
-import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.services.FileService;
 import ec.edu.espe.gpr.services.IEmailService;
 
@@ -29,18 +27,14 @@ public class GprEspeApplication {
 	@Autowired
 	private IUsuarioDao usuarioDao;
 	
-	
+	@PostConstruct
+      void started() {
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Guayaquil"));
+	}
 
 	public static void main(String[] args) {
-
-		
-		
 		SpringApplication.run(GprEspeApplication.class, args);
-		
-
-		
 	}
-	
 	
 	@Bean
 	CommandLineRunner init(FileService fileService) {
