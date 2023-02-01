@@ -24,6 +24,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -57,6 +58,7 @@ public class Tarea implements Serializable {
 
     @Column(name = "FECHA_CREACIONTAREA")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING ,pattern = "dd-MM-YYYY H:mm:ss" , timezone="UTC") 
     private Date fechaCreaciontarea;
     
     @Column(name = "PRIORIDAD_TAREA")
