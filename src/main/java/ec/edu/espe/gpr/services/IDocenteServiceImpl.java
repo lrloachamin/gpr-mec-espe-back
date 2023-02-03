@@ -1,5 +1,6 @@
 package ec.edu.espe.gpr.services;
 
+import java.security.SecureRandom;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
@@ -353,16 +354,31 @@ public class IDocenteServiceImpl implements IDocenteService  {
 	public void resetearPassword(String email){
 		PasswordEncoder passeconder = new BCryptPasswordEncoder();
 		Docente docente = this.docenteDao.findByCorreoDocente(email);
-		docente.getCodigoUsuario().setPasswUsuario(passeconder.encode(docente.getCedulaDocente()));
+		String password = this.generateRandomPassword(10);
+		docente.getCodigoUsuario().setPasswUsuario(passeconder.encode(password));
 		docente.getCodigoUsuario().setFechaModUsuario(new Date());
 		docente.getCodigoUsuario().setEstadoUsuario('2');
 		this.usuarioDao.save(docente.getCodigoUsuario());
 		emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Cambio de Contraseña: ",
 							"Se ha solicitado el cambio de su contraseña, Su usuario es: "+docente.getCodigoUsuario().getNombreUsuario() + 
-                            ", y su password:"+docente.getCedulaDocente());
+                            ", y su password:"+password);
 		
 	}
-
+	
+	private String generateRandomPassword(int len)
+    {
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+ 
+        for (int i = 0; i < len; i++)
+        {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+        return sb.toString();
+    }
+ 
 
 }
 
