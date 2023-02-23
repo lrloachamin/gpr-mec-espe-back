@@ -413,6 +413,7 @@ public class TareaDocenteService {
                 t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
                 t.setCodigoDocente(docente);
                 t.setCodigoTarea(tareaDocenteProyecto.getTarea());
+                t.setCedulaDocenteRevisor(tarea.getIdDocenteRevisor());
                 emservice.enviarCorreo(docente.getCorreoDocente(),
                         "GPR - Nueva Tarea: " + tareaDocenteProyecto.getTarea().getNombreTarea(),
                         "Se ha asignado una nueva tarea de prioridad "
