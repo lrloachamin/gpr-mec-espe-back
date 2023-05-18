@@ -22,6 +22,7 @@ import ec.edu.espe.gpr.controller.FileController;
 import ec.edu.espe.gpr.dao.CargoDocenteDao;
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
+import ec.edu.espe.gpr.dao.IProyectoDao;
 import ec.edu.espe.gpr.dao.ITareaDao;
 import ec.edu.espe.gpr.dao.ITareaDocenteDao;
 import ec.edu.espe.gpr.dao.IndicadorDao;
@@ -32,6 +33,7 @@ import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.CargoDocente;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
+import ec.edu.espe.gpr.model.Proyecto;
 import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
@@ -62,6 +64,8 @@ public class TareaDocenteService {
     private ICargoDao cargoDao;
     @Autowired
     private CargoDocenteDao cargoDocenteDao;
+    @Autowired
+    private IProyectoDao proyectoDao;
     /*
      * @Autowired
      * private IPerfilDao perfilDao;
@@ -184,6 +188,38 @@ public class TareaDocenteService {
     public List<TareaDocenteProyecto> listarTareasDocentes(String idDocente) {
         List<TareaDocenteProyecto> tListDocenteProyecto = new ArrayList<>();
         List<Tarea> tarea = this.tareaDao.findByIdDocenteRevisor(idDocente);
+        for (Tarea t : tarea) {
+            TareaDocenteProyecto tDocenteProyecto = new TareaDocenteProyecto();
+            tDocenteProyecto.setTarea(t);
+            Boolean check = true;
+            List<Docente> docentes = new ArrayList<>();
+            for (TareaDocente tDocente : t.getTareaDocenteList()) {
+                if (check) {
+                    List<Indicador> tareaIndicadors = new ArrayList<>();
+
+                    for (TareaIndicador tareaIndicador : tDocente.getTareaIndicadorList()) {
+                        Indicador indicador = new Indicador(
+                                tareaIndicador.getIndicadorCODIGOINDICADOR().getCodigoIndicador(),
+                                tareaIndicador.getIndicadorCODIGOINDICADOR().getNombreIndicador(),
+                                tareaIndicador.getIndicadorCODIGOINDICADOR().getEstadoIndicador(),
+                                tareaIndicador.getDescripcionTareaIndicador());
+                        tareaIndicadors.add(indicador);
+                    }
+                    tDocenteProyecto.setIndicadors(tareaIndicadors);
+                    check = false;
+                }
+                docentes.add(tDocente.getCodigoDocente());
+            }
+            tDocenteProyecto.setDocentes(docentes);
+            tListDocenteProyecto.add(tDocenteProyecto);
+        }
+        return tListDocenteProyecto;
+    }
+
+    public List<TareaDocenteProyecto> listarTareasDocentesPorProyecto(String idDocente, Integer idProyecto) {
+        List<TareaDocenteProyecto> tListDocenteProyecto = new ArrayList<>();
+        Proyecto proyecto =  this.proyectoDao.findById(idProyecto).get();
+        List<Tarea> tarea = this.tareaDao.findByIdDocenteRevisorAndCodigoProyecto(idDocente,proyecto);
         for (Tarea t : tarea) {
             TareaDocenteProyecto tDocenteProyecto = new TareaDocenteProyecto();
             tDocenteProyecto.setTarea(t);
